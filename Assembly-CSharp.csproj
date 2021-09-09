@@ -55,6 +55,7 @@
      <Compile Include="Assets\Scripts\CoinHandler.cs" />
      <Compile Include="Assets\Scripts\PlayerController.cs" />
      <Compile Include="Assets\Scripts\ValueNoise1dGenerator.cs" />
+     <Compile Include="Assets\Scripts_v2\Initializer.cs" />
      <Compile Include="Assets\Scripts\MoveCourse.cs" />
      <Compile Include="Assets\Scripts\Values.cs" />
      <Compile Include="Assets\Scripts\CourseGenerator.cs" />
