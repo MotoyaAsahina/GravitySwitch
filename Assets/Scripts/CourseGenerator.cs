@@ -40,9 +40,9 @@ public class CourseGenerator : MonoBehaviour
     {
         Physics.gravity = new Vector3(0, 0, 0);
 
-        Values.score = 0;
+        Values.Score = 0;
 
-        Values.genSpan = genSpan;
+        Values.GenSpan = genSpan;
         lifeTime = 40 * genSpan;
 
         deleteQueue = new Queue<GameObject>();
@@ -74,7 +74,7 @@ public class CourseGenerator : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Values.isPlaying && (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0)))
+        if (Values.IsPlaying && (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0)))
         {
             Physics.gravity *= -1;
         }
@@ -90,7 +90,7 @@ public class CourseGenerator : MonoBehaviour
     private void GameStart()
     {
         isReady = false;
-        Values.isPlaying = true;
+        Values.IsPlaying = true;
 
         for (int x = -30; x < 0; x++)
         {
@@ -138,7 +138,7 @@ public class CourseGenerator : MonoBehaviour
 
     IEnumerator Gen()
     {
-        for (int numOfBlocks = 0; Values.isPlaying; numOfBlocks++)
+        for (int numOfBlocks = 0; Values.IsPlaying; numOfBlocks++)
         {
             int floor = noise1.eval(numOfBlocks);
             int ceil = noise2.eval(numOfBlocks);

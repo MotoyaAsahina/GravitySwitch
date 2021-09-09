@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -17,22 +14,18 @@ public class PlayerController : MonoBehaviour
     public GameObject explosion;
 
     private bool isGameOvered = false;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-    }
+    private bool endExplosion;
 
     private float timeCounter;
 
     // Update is called once per frame
     void Update()
     {
-        if (!Values.isPlaying)
+        if (!Values.IsPlaying && endExplosion)
         {
             if (isGameOvered)
             {
-                if (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0))
+                if (Input.GetMouseButtonDown(0))
                 {
                     SceneManager.LoadScene("Main");
                 }
@@ -45,8 +38,8 @@ public class PlayerController : MonoBehaviour
         if (timeCounter >= scoreTime)
         {
             timeCounter = 0;
-            Values.score++;
-            scoreText.text = Values.score.ToString();
+            Values.Score++;
+            scoreText.text = Values.Score.ToString();
         }
     }
 
@@ -55,9 +48,8 @@ public class PlayerController : MonoBehaviour
         if (other.gameObject.CompareTag("Side"))
         {
             isGameOvered = true;
-            Debug.Log("GameOver");
 
-            Values.isPlaying = false;
+            Values.IsPlaying = false;
             Physics.gravity = Vector3.zero;
 
             GetComponent<ParticleSystem>().Stop();
@@ -65,15 +57,21 @@ public class PlayerController : MonoBehaviour
 
             GameObject once = Instantiate(explosion, gameObject.transform.position, Quaternion.identity);
             Destroy(once, 1);
+            Invoke("ChangeFlag", 1);
 
-            if (Values.highScore < Values.score)
+            if (Values.HighScore < Values.Score)
             {
-                Values.highScore = Values.score;
+                Values.HighScore = Values.Score;
             }
 
             gameOverCanvas.SetActive(true);
-            resultScoreText.text = $"Score: {Values.score}";
-            highScoreText.text = $"HighScore: {Values.highScore}";
+            resultScoreText.text = $"Score: {Values.Score}";
+            highScoreText.text = $"HighScore: {Values.HighScore}";
         }
+    }
+
+    private void ChangeFlag()
+    {
+        endExplosion = true;
     }
 }
