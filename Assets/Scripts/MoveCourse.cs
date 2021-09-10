@@ -36,7 +36,7 @@ public class MoveCourse : MonoBehaviour
         var yCeil = Values.NormY - Values.Noise2.eval(i);
 
         var set = new GameObject();
-        set.name = $"Box {i}";
+        set.name = $"Box ({i})";
         set.transform.position = new Vector3(x, 0, 0);
         set.AddComponent<MoveCourse>();
 

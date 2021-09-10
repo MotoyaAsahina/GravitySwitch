@@ -77,7 +77,7 @@ public class Initializer : MonoBehaviour
         {
             var i = ++Values.IndexOfBox;
             var set = new GameObject();
-            set.name = $"Box {i}";
+            set.name = $"Box ({i})";
             set.transform.position = new Vector3(x, 0, 0);
             set.AddComponent<MoveCourse>();
 

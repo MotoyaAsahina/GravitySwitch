@@ -33,6 +33,8 @@ public class PlayerController : MonoBehaviour
 
             return;
         }
+        
+        if (isGameOvered) return;
 
         timeCounter += Time.deltaTime;
         if (timeCounter >= scoreTime)

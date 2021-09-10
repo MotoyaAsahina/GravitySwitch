@@ -255,7 +255,7 @@ MonoBehaviour:
   boxBegin: {fileID: 1790553804}
   boxEnd: {fileID: 350983972}
   normY: 10
-  speed: 6
+  speed: 5
   seed: 
   noiseParameters:
   - freq: 4
