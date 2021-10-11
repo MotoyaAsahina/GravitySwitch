@@ -33,6 +33,7 @@ jobs:
           # ref: https://docs.unity3d.com/ScriptReference/BuildTarget.html
           targetPlatform: WebGL
           unityVersion: 2020.2.7f1
+          allowDirtyBuild: true
 
       - name: Upload
         uses: actions/upload-artifact@v2
