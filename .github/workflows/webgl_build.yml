@@ -1,19 +1,29 @@
-name: Run the WebGL build
+name: webgl-build
 on:
-  workflow_dispatch: {}
+  workflow_dispatch:
+
 jobs:
   build:
     name: Run the WebGL build
     runs-on: ubuntu-latest
-    steps:
-      # actions/checkout@v2 を利用して作業ディレクトリに
-      # Unity プロジェクトの中身をダウンロードしてくる
-      - name: Check out my unity project.
-        uses: actions/checkout@v2
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - webgl-st: 0
+            label: "-Compressed"
+          - webgl-st: 1
+            label: ""
 
-      # GameCI の Builder を利用して、
-      # Unity プロジェクトのビルドを実行する
-      - name: Run the WebGL build
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Configure settings
+        run: |
+          sed -i -e "s/webGLDecompressionFallback: [0-9]/webGLDecompressionFallback: ${{ matrix.webgl-st }}/" ProjectSettings/ProjectSettings.asset
+          cat ProjectSettings/ProjectSettings.asset | grep webGLDecompressionFallback
+
+      - name: Build
         uses: game-ci/unity-builder@v2
         env:
           UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
@@ -22,12 +32,10 @@ jobs:
           # WebGL 以外の指定可能な値は下記に記載の値が利用可能
           # ref: https://docs.unity3d.com/ScriptReference/BuildTarget.html
           targetPlatform: WebGL
-
           unityVersion: 2020.2.7f1
 
-      # Builder で出力した WebGL ビルドをアーティファクトでダウンロード可能にする
-      - name: Upload the WebGL Build
+      - name: Upload
         uses: actions/upload-artifact@v2
         with:
-          name: Build
+          name: Build${{ matrix.label }}
           path: build
